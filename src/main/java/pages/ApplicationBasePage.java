@@ -5,34 +5,44 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 
 @Slf4j
-public abstract class ApplicationBasePage<T> {
+public abstract class ApplicationBasePage {
 
-    WebElement driver;
+    WebDriver driver;
 
     @Getter
     @AllArgsConstructor
-    public enum Locator {
+    private enum Locator {
 
+        CART_BUTTON(By.id("nav-cart-text-container")),
         PAGE_ONE(By.id("root")),
         PAGE_BODY(By.id("root"));
 
-        private final By locatorValue;
+        Locator(By locatorValue) {}
     }
 
+
+    public WebElement findElement(By by) {
+        return driver.findElement(by);
+    }
+
+    public void clickOnElement(By locator) {
+        clickOnElementWithJsExecutor(findElement(locator));
+
+    }
     public void clickOnContinueButton() {
-
     }
 
-    public T clickOnElementWithJsExecutor(WebElement element) {
+    public ApplicationBasePage clickOnElementWithJsExecutor(WebElement element) {
 
         (new Actions(this.driver)).moveToElement(element).perform();
         JavascriptExecutor executor = (JavascriptExecutor)this.driver;
-        executor.executeScript("arguments[0].click;"), new Object[]{element};
+        executor.executeScript("arguments[0].click;", new Object[]{element});
         return this;
     }
 
