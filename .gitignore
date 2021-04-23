@@ -1,0 +1,17 @@
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+
+hs_err_pid
+target/*
+.settings/*
+.idea/*
+
+cucumber_report.xml
+log.txt
+config/browser.properties
+failed.png
+/report.js
+/report
+report
